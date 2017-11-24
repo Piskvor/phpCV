@@ -37,6 +37,7 @@ Before starting, you need :
 
 In addition, if you want to generate PDF on the fly, you'll need to have :
 * wkhtmltopdf installed (http://code.google.com/p/wkhtmltopdf)
+* which also needs xvfb if you want to run it headless (on a server)
 
 Installation
 ------------
