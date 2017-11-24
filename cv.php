@@ -99,12 +99,12 @@ function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_des
     {
     	if ($exclude == 0)
     	{
-    		$count = 2;
+    		$count = 4;
     		$command = "$wkhtmltopdf_bin $options $site" . '?' . "$lang $pdf_destination" . '/';// . "$pdf_filename";
     	}
         else
         {
-			$count = 0;
+			$count = 3;
 			$command = "$wkhtmltopdf_bin $options $site" . '?' . "$lang" . '_exclude' . " $pdf_destination" . '/';// . "$pdf_filename";
     	}
     }
@@ -112,13 +112,13 @@ function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_des
     {
     	if ($exclude == 0)
     	{
-			$count = 3;
+			$count = 1;
 
 			$command = "$wkhtmltopdf_bin $options $site" . '?' . $secret . '_' . $lang . '_full' . " $pdf_destination" . '/';// . "$pdf_filename";
     	}
         else
         {
-			$count = 1;
+			$count = 2;
 
 			$command = "$wkhtmltopdf_bin $options $site" . '?' . $secret . '_' . $lang . '_full_exclude' . " $pdf_destination" . '/';// . "$pdf_filename";
         }
@@ -151,9 +151,12 @@ function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_des
 	}
 	$location = preg_replace('~/+~','/', $location);
 
-    if (!$fullcv) {
-		header('Location: ' . $location);
-	} else {
+    if ($fullcv) {
+    	$location .= '?obfuscate=' . $secret . '&filename=' . $pdf_filename;
+    }
+    header('Location: ' . $location);
+	/*
+	 } else {
 		// Create PDF page to make it downloadable
 		header("Content-Type: application/pdf");
 		header("Content-Disposition: attachment; filename=" . $pdf_filename);
@@ -161,6 +164,7 @@ function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_des
 		//unlink($pdf_destination . '/' . $pdf_filename);
 		exit;
 	}
+	// */
 
 }
 
