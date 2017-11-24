@@ -17,8 +17,10 @@
 // phpCV version
 $version = "0.1";
 
-// Secret keyword to show Full CV
-$secret = 'typicalbuilding';
+// Secret keyword to show Full CV - if none, do not show
+$secret = null;
+@include 'secret.php';
+
 
 if (!empty($_SERVER['QUERY_STRING'])) {
 	$qs = $_SERVER['QUERY_STRING'];
@@ -34,7 +36,7 @@ if(!empty($default_lang)) {
 }
 
 // Configuration file
-include "config.php";
+require 'config.php';
 
 // Look if requested full CV or standart
 function lang_and_fullcv($secret, $qs)

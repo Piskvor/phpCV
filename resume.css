@@ -57,7 +57,7 @@ body.index { font-family: Georgia; color: #444; margin-top: 80px; }
 /* //-- core typography and style -- */
 /* Old line because of bug with wkhtmltopdf on letter-spacing
 #hd h1 { font-size: 48px; text-transform: uppercase; letter-spacing: 3px; } */
-#hd h1 { font-size: 48px; text-transform: uppercase; letter-spacing: 0.03em; }
+#hd h1 { font-size: 32px; text-transform: uppercase; letter-spacing: 0.03em; }
 h2 { font-size: 152% }
 h2.larger { font-size: 152%; width: 110px; }
 h3, h4 { font-size: 122%; }
