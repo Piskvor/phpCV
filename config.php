@@ -1,16 +1,16 @@
 <?php
 /* phpcv - PHP Curriculum Vitae 0.1
- * Made by Pierre Mavro
+ * Made by Pierre Mavro & Piskvor
 */
 
 ///////////////////////////////
 // All versions (first part) //
 ///////////////////////////////
-$my_name = "Prenom Nom";
-$my_mail = "my@mail.fr";
-$my_birth_day = "1";
-$my_birth_month = "1";
-$my_birth_year = "2000";
+$my_name = 'Jan Martinec';
+$my_mail = 'jan {\} martinec.name';
+$my_birth_day = "13";
+$my_birth_month = "11";
+$my_birth_year = "1981";
 $secret = "mysecret";
 
 ///////////////
@@ -20,7 +20,7 @@ $secret = "mysecret";
 //
 // French Version
 //
-if ($lang == 'fr')
+if ($lang === 'cs')
 {
     // <br /> has been added because of bug with wkhtmltopdf on letter-spacing
 	$role = "Mon titre";
@@ -183,14 +183,15 @@ $others_list = array(
 //////////////////
 
 // wkhtmltopdf binary path
-$wkhtmltopdf_bin = "/usr/bin/wkhtmltopdf";
+$wkhtmltopdf_bin = '/usr/bin/xvfb-run /usr/local/bin/wkhtmltopdf';
 // Options
-$options = "--no-background -B 10";
+$options = '--no-background -B 10';
 // URL to cv.php
-$site = "http://www.mycvsite.fr/cv.php";
-// Destination where to stock file (prefer tempory filesystem if possible)
-$pdf_destination = "/tmp";
-// PDF file name when downloaded
-$pdf_filename = "";
+$site = 'http://cv.martinec.name/cv.php';
+// Destination where to stock file (prefer temporary filesystem if possible)
+$pdf_destination = __DIR__ . DIRECTORY_SEPARATOR . '/pdf';
+// PDF file name when downloaded - empty for a heuristic
+$pdf_filename = '';
+
 
 ?>

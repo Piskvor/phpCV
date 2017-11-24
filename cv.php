@@ -23,6 +23,10 @@ $secret = 'mysecret';
 // Get lang and if full CV is required
 list ($lang, $fullcv, $pdf, $exclude) = lang_and_fullcv($secret); //Do not remove this line
 
+if(!empty($default_lang)) {
+	$lang = $default_lang;
+}
+
 // Configuration file
 include "config.php";
 
@@ -30,9 +34,9 @@ include "config.php";
 function lang_and_fullcv($secret)
 {
 	// Get requested language
-	if (preg_match('/fr/i', $_SERVER[QUERY_STRING]))
+	if (preg_match('/cs/i', $_SERVER[QUERY_STRING]))
 	{
-		$lang='fr';
+		$lang='cs';
 	}
 	else
 	{
@@ -67,7 +71,7 @@ function lang_and_fullcv($secret)
 	}
 	
     // Check if this request is asking to generate the PDF format
-	if (preg_match('/exclude/i', $_SERVER[QUERY_STRING]))
+	if (!preg_match('/include/i', $_SERVER[QUERY_STRING]))
 	{
 		$exclude=1;
 	}
@@ -95,30 +99,61 @@ function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_des
     {
     	if ($exclude == 0)
     	{
-    		exec("$wkhtmltopdf_bin $options $site" . '?' . "$lang $pdf_destination" . '/' . "$pdf_filename");
+    		$count = 2;
+    		$command = "$wkhtmltopdf_bin $options $site" . '?' . "$lang $pdf_destination" . '/';// . "$pdf_filename";
     	}
         else
         {
-        	exec("$wkhtmltopdf_bin $options $site" . '?' . "$lang" . '_exclude' . " $pdf_destination" . '/' . "$pdf_filename");
+			$count = 0;
+			$command = "$wkhtmltopdf_bin $options $site" . '?' . "$lang" . '_exclude' . " $pdf_destination" . '/';// . "$pdf_filename";
     	}
     }
     else
     {
     	if ($exclude == 0)
     	{
-    		exec("$wkhtmltopdf_bin $options $site" . '?' . "$lang" . '_full' . " $pdf_destination" . '/' . "$pdf_filename");
+			$count = 3;
+
+			$command = "$wkhtmltopdf_bin $options $site" . '?' . "$lang" . '_full' . " $pdf_destination" . '/';// . "$pdf_filename";
     	}
         else
         {
-        	exec("$wkhtmltopdf_bin $options $site" . '?' . "$lang" . '_full_exclude' . " $pdf_destination" . '/' . "$pdf_filename");
+			$count = 1;
+
+			$command = "$wkhtmltopdf_bin $options $site" . '?' . "$lang" . '_full_exclude' . " $pdf_destination" . '/';// . "$pdf_filename";
         }
     }
 
-    // Create PDF page to make it downloadable
-    header("Content-type: application/pdf");
+    $count_strings = str_repeat('_', $count);
+    $pdf_filename = str_replace('.pdf',$count_strings . '.pdf',$pdf_filename);
+
+	$pdf_file_path = $pdf_destination . DIRECTORY_SEPARATOR . $pdf_filename;
+	$generate = true;
+	if (file_exists($pdf_file_path) && (filemtime(__DIR__ . DIRECTORY_SEPARATOR . 'config.php') < filemtime($pdf_file_path))) {
+		// nothing changed in config
+		$generate = false;
+	}
+    if ($generate) {
+		$command .= $pdf_filename;
+//		echo $command;
+		exec($command,$output,$result);
+//		var_dump($output);echo $result; exit;
+
+	}
+	$abs_location = __DIR__;
+    $location = $pdf_file_path;
+    if (strpos($pdf_file_path,$abs_location) !== false) {
+    	$location = substr($location,strlen($abs_location));
+	}
+	$location = preg_replace('~/+~','/', $location);
+
+	header('Location: ' . $location);
+/*    // Create PDF page to make it downloadable
+    header("Content-Type: application/pdf");
     header("Content-Disposition: attachment; filename=" . $pdf_filename);
     readfile("$pdf_destination/$pdf_filename");
-    unlink($pdf_destination . '/' . $pdf_filename);
+    //unlink($pdf_destination . '/' . $pdf_filename);*/
+
 }
 
 // HTML Header
@@ -630,7 +665,7 @@ _HTML_;
 }
 
 // Check for PDF request
-if ($pdf == 1)
+if ($pdf === 1)
 {
     push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_destination,$pdf_filename,$my_name,$exclude);
 }
