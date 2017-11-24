@@ -43,6 +43,7 @@ function lang_and_fullcv($secret)
 		$lang='en';
 	}
 
+	/*
 	// Get if full CV (with phone number, year etc... is requested)
     if ($secret)
     {
@@ -57,8 +58,9 @@ function lang_and_fullcv($secret)
     }
     else
     {
+	// */
         $fullcv=0;
-    }
+    //}
 
     // Check if this request a PDF format
 	if (preg_match('/pdf/i', $_SERVER[QUERY_STRING]))
