@@ -23,7 +23,7 @@ if ($lang === 'cs')
 {
     // <br /> has been added because of bug with wkhtmltopdf on letter-spacing
 //	$role = "Vývojář";
-	$title = "$my_name | $role | $my_mail";
+	$title = "$my_name $role | $my_mail";
 	$personnal_infos = array(
 		"Mail : <a href=\"mailto:$my_mail\">$my_mail</a>");
 	$personnal_infos_full = array(
@@ -131,7 +131,7 @@ else
 {
     // <br /> has been added because of bug with wkhtmltopdf on letter-spacing
 //	$role = "Developer";
-	$title = "$my_name | $role | $my_mail";
+	$title = "$my_name $role | $my_mail";
 	$personnal_infos = array(
 		"Mail : <a href=\"mailto:$my_mail\">$my_mail</a>"
 	);
