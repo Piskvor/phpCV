@@ -40,7 +40,7 @@ function prefered_language ($available_languages,$http_accept_language="auto") {
 		}
 		else $language = $langprefix;
 		$qvalue = 1.0;
-		if (!empty($arr[5])) $qvalue = floatval($arr[5]);
+		if (!empty($arr[5])) $qvalue = (float)$arr[5];
 
 		// find q-maximal language
 		if (in_array($language,$available_languages) && ($qvalue > $bestqval)) {
