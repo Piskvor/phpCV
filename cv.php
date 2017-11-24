@@ -85,7 +85,7 @@ function lang_and_fullcv($secret)
 };
 
 // Generate a PDF version
-function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_destination,$pdf_filename,$my_name,$exclude)
+function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_destination,$pdf_filename,$my_name,$exclude,$secret)
 {
     // Replace generated PDF filename by firstname_second_name.pdf if $pdf_filename is unset
     if (!$pdf_filename)
@@ -114,13 +114,13 @@ function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_des
     	{
 			$count = 3;
 
-			$command = "$wkhtmltopdf_bin $options $site" . '?' . "$lang" . '_full' . " $pdf_destination" . '/';// . "$pdf_filename";
+			$command = "$wkhtmltopdf_bin $options $site" . '?' . $secret . '_' . $lang . '_full' . " $pdf_destination" . '/';// . "$pdf_filename";
     	}
         else
         {
 			$count = 1;
 
-			$command = "$wkhtmltopdf_bin $options $site" . '?' . "$lang" . '_full_exclude' . " $pdf_destination" . '/';// . "$pdf_filename";
+			$command = "$wkhtmltopdf_bin $options $site" . '?' . $secret . '_' . $lang . '_full_exclude' . " $pdf_destination" . '/';// . "$pdf_filename";
         }
     }
 
@@ -135,9 +135,13 @@ function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_des
 	}
     if ($generate) {
 		$command .= $pdf_filename;
-//		echo $command;
 		exec($command,$output,$result);
-//		var_dump($output);echo $result; exit;
+		/*
+		echo $pdf_filename;
+		echo $command;
+		var_dump($fullcv);
+		var_dump($output);echo $result; exit;
+		// */
 
 	}
 	$abs_location = __DIR__;
@@ -147,12 +151,16 @@ function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_des
 	}
 	$location = preg_replace('~/+~','/', $location);
 
-	header('Location: ' . $location);
-/*    // Create PDF page to make it downloadable
-    header("Content-Type: application/pdf");
-    header("Content-Disposition: attachment; filename=" . $pdf_filename);
-    readfile("$pdf_destination/$pdf_filename");
-    //unlink($pdf_destination . '/' . $pdf_filename);*/
+    if (!$fullcv) {
+		header('Location: ' . $location);
+	} else {
+		// Create PDF page to make it downloadable
+		header("Content-Type: application/pdf");
+		header("Content-Disposition: attachment; filename=" . $pdf_filename);
+		readfile($pdf_file_path);
+		//unlink($pdf_destination . '/' . $pdf_filename);
+		exit;
+	}
 
 }
 
@@ -667,7 +675,7 @@ _HTML_;
 // Check for PDF request
 if ($pdf === 1)
 {
-    push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_destination,$pdf_filename,$my_name,$exclude);
+    push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_destination,$pdf_filename,$my_name,$exclude,$secret);
 }
 // Header : HTML header, title, encoding, CSS
 cv_header($lang,$title,$version,$my_name);
