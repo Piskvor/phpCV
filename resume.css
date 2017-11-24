@@ -44,7 +44,7 @@ body.index { font-family: Georgia; color: #444; margin-top: 80px; }
 	/*margin-bottom: 2em; padding-bottom: 2em;*/ border-bottom: 1px solid #ccc; }
 
 /* //-- header, body, footer -- */
-#hd { margin: 2.5em 0 3em 0; padding-bottom: 1.5em; border-bottom: 1px solid #ccc }
+#hd { margin: 1em 0 1em 0; padding-bottom: 1.5em; border-bottom: 1px solid #ccc }
 /* Old line because of bug with wkhtmltopdf on letter-spacing
 #hd h2 { text-transform: uppercase; letter-spacing: 1px; } */
 #hd h2 { text-transform: uppercase; letter-spacing: 0.05em; }
@@ -59,8 +59,8 @@ body.index { font-family: Georgia; color: #444; margin-top: 80px; }
 #hd h1 { font-size: 48px; text-transform: uppercase; letter-spacing: 3px; } */
 #hd h1 { font-size: 32px; text-transform: uppercase; letter-spacing: 0.03em; }
 h2 { font-size: 152% }
-h2.larger { font-size: 152%; width: 110px; }
-h3, h4 { font-size: 122%; }
+h2.larger { font-size: 135%; width: 110px; }
+h3, h4 { font-size: 110%; }
 h1, h2, h3, h4 { color: #333; }
 p { font-size: 100%; line-height: 18px; padding-right: 3em; }
 a { color: #333333; text-decoration: none; }
