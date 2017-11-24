@@ -722,6 +722,12 @@ if ($knowledges_title)
 {
 	cv_knowledges($knowledges_title,$first_knowledges,$second_knowledges,$third_knowledges);
 }
+// Others
+if ($others_title)
+{
+	cv_others($others_title,$all_others,$others_list);
+}
+
 // Experience
 if ($experience_title)
 {
@@ -731,11 +737,6 @@ if ($experience_title)
 if ($education_title)
 {
 	cv_education($education_title,$all_education);
-}
-// Others
-if ($others_title)
-{
-	cv_others($others_title,$all_others,$others_list);
 }
 // Spare Times
 if ($hobby_title)
