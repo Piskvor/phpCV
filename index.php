@@ -2,7 +2,7 @@
 $langs = array(
 	'cs','en'
 );
-$default_language = prefered_language($langs);
+$default_lang = prefered_language($langs);
 
 /*
  * @link: https://stackoverflow.com/a/6038460/19746
