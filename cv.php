@@ -18,10 +18,16 @@
 $version = "0.1";
 
 // Secret keyword to show Full CV
-$secret = 'mysecret';
+$secret = 'typicalbuilding';
+
+if (!empty($_SERVER['QUERY_STRING'])) {
+	$qs = $_SERVER['QUERY_STRING'];
+} else {
+	$qs = $_SERVER['REDIRECT_URL'];
+}
 
 // Get lang and if full CV is required
-list ($lang, $fullcv, $pdf, $exclude) = lang_and_fullcv($secret); //Do not remove this line
+list ($lang, $fullcv, $pdf, $exclude) = lang_and_fullcv($secret,$qs); //Do not remove this line
 
 if(!empty($default_lang)) {
 	$lang = $default_lang;
@@ -31,10 +37,10 @@ if(!empty($default_lang)) {
 include "config.php";
 
 // Look if requested full CV or standart
-function lang_and_fullcv($secret)
+function lang_and_fullcv($secret, $qs)
 {
 	// Get requested language
-	if (preg_match('/cs/i', $_SERVER[QUERY_STRING]))
+	if (preg_match('/cs/i', $qs))
 	{
 		$lang='cs';
 	}
@@ -43,11 +49,11 @@ function lang_and_fullcv($secret)
 		$lang='en';
 	}
 
-	/*
+	//*
 	// Get if full CV (with phone number, year etc... is requested)
     if ($secret)
     {
-    	if (preg_match("/$secret/i", $_SERVER[QUERY_STRING]))
+    	if (preg_match("/$secret/i", $qs))
     	{
     		$fullcv=1;
     	}
@@ -60,10 +66,10 @@ function lang_and_fullcv($secret)
     {
 	// */
         $fullcv=0;
-    //}
+    }
 
     // Check if this request a PDF format
-	if (preg_match('/pdf/i', $_SERVER[QUERY_STRING]))
+	if (preg_match('/pdf/i', $qs))
 	{
 		$pdf=1;
 	}
@@ -73,7 +79,7 @@ function lang_and_fullcv($secret)
 	}
 	
     // Check if this request is asking to generate the PDF format
-	if (!preg_match('/include/i', $_SERVER[QUERY_STRING]))
+	if (!preg_match('/include/i', $qs))
 	{
 		$exclude=1;
 	}
@@ -89,6 +95,7 @@ function lang_and_fullcv($secret)
 // Generate a PDF version
 function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_destination,$pdf_filename,$my_name,$exclude,$secret)
 {
+	$fullcv = 0;
     // Replace generated PDF filename by firstname_second_name.pdf if $pdf_filename is unset
     if (!$pdf_filename)
     {
