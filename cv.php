@@ -108,12 +108,12 @@ function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_des
     {
     	if ($exclude == 0)
     	{
-    		$count = 4;
+    		$count = 2;
     		$command = "$wkhtmltopdf_bin $options $site" . '?' . "$lang $pdf_destination" . '/';// . "$pdf_filename";
     	}
         else
         {
-			$count = 3;
+			$count = 0;
 			$command = "$wkhtmltopdf_bin $options $site" . '?' . "$lang" . '_exclude' . " $pdf_destination" . '/';// . "$pdf_filename";
     	}
     }
@@ -121,13 +121,13 @@ function push_pdf_version($lang,$fullcv,$wkhtmltopdf_bin,$options,$site,$pdf_des
     {
     	if ($exclude == 0)
     	{
-			$count = 1;
+			$count = 3;
 
 			$command = "$wkhtmltopdf_bin $options $site" . '?' . $secret . '_' . $lang . '_full' . " $pdf_destination" . '/';// . "$pdf_filename";
     	}
         else
         {
-			$count = 2;
+			$count = 4;
 
 			$command = "$wkhtmltopdf_bin $options $site" . '?' . $secret . '_' . $lang . '_full_exclude' . " $pdf_destination" . '/';// . "$pdf_filename";
         }
@@ -194,8 +194,8 @@ function cv_header($lang,$title,$version,$my_name)
 	<meta name="keywords" content="CV, Curriculum Vitae, $my_name" />
 	<meta name="description" content="" />
 
-	<link rel="stylesheet" type="text/css" href="reset-fonts-grids.css" media="all" /> 
-	<link rel="stylesheet" type="text/css" href="resume.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/reset-fonts-grids.css" media="all" /> 
+	<link rel="stylesheet" type="text/css" href="/resume.css" media="all" />
 
 </head>
 <body>
@@ -232,6 +232,10 @@ function cv_name($fullcv,$my_name,$role,$personnal_infos,$personnal_infos_full)
 {
 	print <<<_HTML_
 	<div id="doc2" class="yui-t7">
+	<div class="links">
+		<div class="pdf"><a href="generate_pdf">PDF</a></div>
+		<div class="langs"><a href="/en/">EN</a> <a href="/cs/">CS</a></div>
+	</div>
 	<div id="inner">
 	
 		<div id="hd">

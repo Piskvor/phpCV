@@ -2,7 +2,13 @@
 $langs = array(
 	'cs','en'
 );
-$default_lang = prefered_language($langs);
+$lang = prefered_language($langs);
+
+if (!$lang) {
+	$lang = $langs[0];
+}
+header('Location: /' .  $lang . '/');
+exit;
 
 /*
  * @link: https://stackoverflow.com/a/6038460/19746
@@ -55,5 +61,3 @@ function prefered_language ($available_languages,$http_accept_language="auto") {
 	}
 	return $bestlang;
 }
-
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'cv.php';

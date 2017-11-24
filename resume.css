@@ -10,6 +10,26 @@
 ---------------------------------------------------------------------------------
 */
 
+.links {
+	padding-top: 0.5em;
+	padding-bottom: 1em;
+	font-size: large;
+}
+
+.langs {
+	float: left;
+}
+.pdf {
+	float: right;
+}
+@media print {
+	.links {
+		display: none;
+	}
+}
+#inner {
+	clear: both;
+}
 
 .msg { padding: 10px; background: #222; position: relative; }
 .msg h1 { color: #fff;  }
